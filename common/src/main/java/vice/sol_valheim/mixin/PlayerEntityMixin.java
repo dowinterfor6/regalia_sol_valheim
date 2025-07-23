@@ -38,6 +38,9 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 {
     private static final Logger LOGGER = LogUtils.getLogger();
     
+    private float baseHp = 0;
+    private int maxFoodSlots = 2;
+    
     private String currentPlayerStature = "";
     	
 	@Unique
@@ -115,33 +118,46 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 
         Set<String> tags = player.getTags();
         
-//        Stature baseHp
-        float baseHp = 0;
-        
+        int nextMaxFoodSlots = 2;
+        float nextBaseHp = 0;
         String currStature = "regalia.datapack.origins.sol.valheim.data.";
         if (tags.contains("regalia.datapack.origins.sol.valheim.data.tiny")) {
-        	baseHp = 6;
+        	nextBaseHp = 6;
+        	nextMaxFoodSlots = 1;
         	currStature += "tiny";
         } else if (tags.contains("regalia.datapack.origins.sol.valheim.data.small")) {
-        	baseHp = 8;
+        	nextBaseHp = 8;
         	currStature += "small";
         } else if (tags.contains("regalia.datapack.origins.sol.valheim.data.short")) {
-        	baseHp = 10;
+        	nextBaseHp = 10;
         	currStature += "short";
         } else if (tags.contains("regalia.datapack.origins.sol.valheim.data.average")) {
-        	baseHp = 12;
+        	nextBaseHp = 12;
         	currStature += "average";
         } else if (tags.contains("regalia.datapack.origins.sol.valheim.data.tall")) {
-        	baseHp = 14;
+        	nextBaseHp = 14;
         	currStature += "tall";
         } else if (tags.contains("regalia.datapack.origins.sol.valheim.data.large")) {
-        	baseHp = 18;
+        	nextBaseHp = 18;
         	currStature += "large";
         } else if (tags.contains("regalia.datapack.origins.sol.valheim.data.huge")) {
-        	baseHp = 24;
+        	nextBaseHp = 24;
+        	nextMaxFoodSlots = 3;
         	currStature += "huge";
         } else {
         	currStature += "error";
+        }
+        
+        if (Integer.compare(nextMaxFoodSlots, maxFoodSlots) != 0) {
+        	LOGGER.info("Changing maxFoodSlots from {} to {}", maxFoodSlots, nextMaxFoodSlots);
+        	maxFoodSlots = nextMaxFoodSlots;
+        	sol_valheim$food_data.MaxItemSlots = maxFoodSlots;
+        	sol_valheim$food_data.clear();
+        }
+        
+        if (Float.compare(nextBaseHp, baseHp) != 0) {
+        	LOGGER.info("Changing baseHp from {} to {}", baseHp, nextBaseHp);
+        	nextBaseHp = baseHp;
         }
         
         String[] currStatureArr = currStature.split("\\.");
