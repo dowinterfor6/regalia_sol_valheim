@@ -41,7 +41,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     private float baseHp = 0;
     private int maxFoodSlots = 2;
     
-    private String currentPlayerStature = "";
+//    private String currentPlayerStature = "";
     	
 	@Unique
     private static final EntityDataAccessor<ValheimFoodData> sol_valheim$DATA_ACCESSOR = SynchedEntityData.defineId(Player.class, ValheimFoodData.FOOD_DATA_SERIALIZER);
@@ -120,55 +120,55 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         
         int nextMaxFoodSlots = 2;
         float nextBaseHp = 0;
-        String currStature = "regalia.datapack.origins.sol.valheim.data.";
+//        String currStature = "regalia.datapack.origins.sol.valheim.data.";
         if (tags.contains("regalia.datapack.origins.sol.valheim.data.tiny")) {
         	nextBaseHp = 6;
         	nextMaxFoodSlots = 1;
-        	currStature += "tiny";
+//        	currStature += "tiny";
         } else if (tags.contains("regalia.datapack.origins.sol.valheim.data.small")) {
         	nextBaseHp = 8;
-        	currStature += "small";
+//        	currStature += "small";
         } else if (tags.contains("regalia.datapack.origins.sol.valheim.data.short")) {
         	nextBaseHp = 10;
-        	currStature += "short";
+//        	currStature += "short";
         } else if (tags.contains("regalia.datapack.origins.sol.valheim.data.average")) {
         	nextBaseHp = 12;
-        	currStature += "average";
+//        	currStature += "average";
         } else if (tags.contains("regalia.datapack.origins.sol.valheim.data.tall")) {
         	nextBaseHp = 14;
-        	currStature += "tall";
+//        	currStature += "tall";
         } else if (tags.contains("regalia.datapack.origins.sol.valheim.data.large")) {
         	nextBaseHp = 18;
-        	currStature += "large";
+//        	currStature += "large";
         } else if (tags.contains("regalia.datapack.origins.sol.valheim.data.huge")) {
         	nextBaseHp = 24;
         	nextMaxFoodSlots = 3;
-        	currStature += "huge";
+//        	currStature += "huge";
         } else {
-        	currStature += "error";
+//        	currStature += "error";
         }
         
         if (Integer.compare(nextMaxFoodSlots, maxFoodSlots) != 0) {
-        	LOGGER.info("Changing maxFoodSlots from {} to {}", maxFoodSlots, nextMaxFoodSlots);
+//        	LOGGER.info("Changing maxFoodSlots from {} to {}", maxFoodSlots, nextMaxFoodSlots);
         	maxFoodSlots = nextMaxFoodSlots;
         	sol_valheim$food_data.MaxItemSlots = maxFoodSlots;
         	sol_valheim$food_data.clear();
         }
         
         if (Float.compare(nextBaseHp, baseHp) != 0) {
-        	LOGGER.info("Changing baseHp from {} to {}", baseHp, nextBaseHp);
+//        	LOGGER.info("Changing baseHp from {} to {}", baseHp, nextBaseHp);
         	baseHp = nextBaseHp;
         }
         
-        String[] currStatureArr = currStature.split("\\.");
-        String currStatureFormatted = currStatureArr[currStatureArr.length - 1];
-        
-        if (currStatureFormatted.equals("error")) {
-        	LOGGER.info("Error found, could not get stature from tags");
-        } else if (currentPlayerStature.equals(currStatureFormatted)) {
-        	LOGGER.info("Changing stature from {} to {}", currentPlayerStature, currStatureFormatted);
-        	currentPlayerStature = currStatureFormatted;
-        }
+//        String[] currStatureArr = currStature.split("\\.");
+//        String currStatureFormatted = currStatureArr[currStatureArr.length - 1];
+//        
+//        if (currStatureFormatted.equals("error")) {
+//        	LOGGER.info("Error found, could not get stature from tags");
+//        } else if (currentPlayerStature.equals(currStatureFormatted)) {
+//        	LOGGER.info("Changing stature from {} to {}", currentPlayerStature, currStatureFormatted);
+//        	currentPlayerStature = currStatureFormatted;
+//        }
         
         float maxhp = Math.min(40, baseHp + sol_valheim$food_data.getTotalFoodNutrition());
                
