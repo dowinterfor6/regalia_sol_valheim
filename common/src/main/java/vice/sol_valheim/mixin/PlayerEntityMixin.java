@@ -157,7 +157,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         
         if (Float.compare(nextBaseHp, baseHp) != 0) {
         	LOGGER.info("Changing baseHp from {} to {}", baseHp, nextBaseHp);
-        	nextBaseHp = baseHp;
+        	baseHp = nextBaseHp;
         }
         
         String[] currStatureArr = currStature.split("\\.");
