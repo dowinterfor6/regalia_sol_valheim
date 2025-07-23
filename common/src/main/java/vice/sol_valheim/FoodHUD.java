@@ -63,8 +63,8 @@ public class FoodHUD implements ClientGuiEvent.RenderHud
 //        int width = client.getWindow().getGuiScaledWidth() / 2 + 91;
 //        int height = client.getWindow().getGuiScaledHeight() - 39 - (useLargeIcons ? 6 : 0);
 
-        int width = client.getWindow().getGuiScaledWidth() / 2 - 78;
-        int height = client.getWindow().getGuiScaledHeight() - 39 - (useLargeIcons ? 6 : 0) - 24;
+        int width = client.getWindow().getGuiScaledWidth() / 2 - 76;
+        int height = client.getWindow().getGuiScaledHeight() - 39 - (useLargeIcons ? 6 : 0) - 22;
         
         int offset = 1;
         int size = useLargeIcons ? 14 : 9;
