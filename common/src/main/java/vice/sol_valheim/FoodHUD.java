@@ -60,7 +60,7 @@ public class FoodHUD implements ClientGuiEvent.RenderHud
 
         boolean useLargeIcons = SOLValheim.Config.client.useLargeIcons;
 
-        int width = client.getWindow().getGuiScaledWidth() / 2 + 91;
+        int width = client.getWindow().getGuiScaledWidth() / 2 - 91;
         int height = client.getWindow().getGuiScaledHeight() - 39 - (useLargeIcons ? 6 : 0);
 
         int offset = 1;
