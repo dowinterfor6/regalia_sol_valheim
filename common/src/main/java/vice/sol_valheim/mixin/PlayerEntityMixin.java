@@ -13,7 +13,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 
-import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -22,28 +21,18 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import com.mojang.logging.LogUtils;
-
 import vice.sol_valheim.SOLValheim;
 import vice.sol_valheim.accessors.FoodDataPlayerAccessor;
 import vice.sol_valheim.accessors.PlayerEntityMixinDataAccessor;
 import vice.sol_valheim.ValheimFoodData;
 
 import java.util.ArrayList;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Mixin({Player.class})
 public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEntityMixinDataAccessor
-{
-    private static final Logger LOGGER = LogUtils.getLogger();
-    
-    private float baseHp = 0;
-    private int maxFoodSlots = 2;
-    
-//    private String currentPlayerStature = "";
-    	
-	@Unique
+{    
+ 	@Unique
     private static final EntityDataAccessor<ValheimFoodData> sol_valheim$DATA_ACCESSOR = SynchedEntityData.defineId(Player.class, ValheimFoodData.FOOD_DATA_SERIALIZER);
 
     @Shadow
@@ -112,66 +101,9 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         }
         
 
-//        float maxhp = Math.min(40, (SOLValheim.Config.common.startingHealth * 2) + sol_valheim$food_data.getTotalFoodNutrition());
+        float maxhp = Math.min(40, (SOLValheim.Config.common.startingHealth * 2) + sol_valheim$food_data.getTotalFoodNutrition());
 
         Player player = (Player) (LivingEntity) this;
-
-        Set<String> tags = player.getTags();
-        
-        int nextMaxFoodSlots = 2;
-        float nextBaseHp = 0;
-//        String currStature = "regalia.datapack.origins.sol.valheim.data.";
-        if (tags.contains("regalia.datapack.origins.sol.valheim.data.tiny")) {
-        	nextBaseHp = 6;
-        	nextMaxFoodSlots = 1;
-//        	currStature += "tiny";
-        } else if (tags.contains("regalia.datapack.origins.sol.valheim.data.small")) {
-        	nextBaseHp = 8;
-//        	currStature += "small";
-        } else if (tags.contains("regalia.datapack.origins.sol.valheim.data.short")) {
-        	nextBaseHp = 10;
-//        	currStature += "short";
-        } else if (tags.contains("regalia.datapack.origins.sol.valheim.data.average")) {
-        	nextBaseHp = 12;
-//        	currStature += "average";
-        } else if (tags.contains("regalia.datapack.origins.sol.valheim.data.tall")) {
-        	nextBaseHp = 14;
-//        	currStature += "tall";
-        } else if (tags.contains("regalia.datapack.origins.sol.valheim.data.large")) {
-        	nextBaseHp = 18;
-//        	currStature += "large";
-        } else if (tags.contains("regalia.datapack.origins.sol.valheim.data.huge")) {
-        	nextBaseHp = 24;
-        	nextMaxFoodSlots = 3;
-//        	currStature += "huge";
-        } else {
-//        	currStature += "error";
-        }
-        
-        if (Integer.compare(nextMaxFoodSlots, maxFoodSlots) != 0) {
-//        	LOGGER.info("Changing maxFoodSlots from {} to {}", maxFoodSlots, nextMaxFoodSlots);
-        	maxFoodSlots = nextMaxFoodSlots;
-        	sol_valheim$food_data.MaxItemSlots = maxFoodSlots;
-        	sol_valheim$food_data.clear();
-        }
-        
-        if (Float.compare(nextBaseHp, baseHp) != 0) {
-//        	LOGGER.info("Changing baseHp from {} to {}", baseHp, nextBaseHp);
-        	baseHp = nextBaseHp;
-        }
-        
-//        String[] currStatureArr = currStature.split("\\.");
-//        String currStatureFormatted = currStatureArr[currStatureArr.length - 1];
-//        
-//        if (currStatureFormatted.equals("error")) {
-//        	LOGGER.info("Error found, could not get stature from tags");
-//        } else if (currentPlayerStature.equals(currStatureFormatted)) {
-//        	LOGGER.info("Changing stature from {} to {}", currentPlayerStature, currStatureFormatted);
-//        	currentPlayerStature = currStatureFormatted;
-//        }
-        
-        float maxhp = Math.min(40, baseHp + sol_valheim$food_data.getTotalFoodNutrition());
-               
         player.getFoodData().setSaturation(0);
 
         player.getAttribute(Attributes.MAX_HEALTH).setBaseValue(maxhp);
@@ -186,11 +118,10 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
             else if (maxhp < 20 && speedBuff != null)
                 attr.removeModifier(SOLValheim.getSpeedBuffModifier());
         }
-        
         var timeSinceHurt = level.getGameTime() - ((LivingEntityDamageAccessor) this).getLastDamageStamp();
         if (timeSinceHurt > SOLValheim.Config.common.regenDelay && player.tickCount % (5 * SOLValheim.Config.common.regenSpeedModifier) == 0)
         {
-            player.heal((sol_valheim$food_data.getRegenSpeed()) / 20f);
+            player.heal(sol_valheim$food_data.getRegenSpeed() / 20f);
         }
     }
 

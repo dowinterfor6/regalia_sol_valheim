@@ -63,8 +63,8 @@ public class FoodHUD implements ClientGuiEvent.RenderHud
 //        int width = client.getWindow().getGuiScaledWidth() / 2 + 91;
 //        int height = client.getWindow().getGuiScaledHeight() - 39 - (useLargeIcons ? 6 : 0);
 
-        int width = client.getWindow().getGuiScaledWidth() / 2 - 76;
-        int height = client.getWindow().getGuiScaledHeight() - 39 - (useLargeIcons ? 6 : 0) - 22;
+        int width = client.getWindow().getGuiScaledWidth() / 2 + 91 + (14 + 7);
+        int height = client.getWindow().getGuiScaledHeight() - (39 - 14 - 14 + 2) - (useLargeIcons ? 6 : 0);
         
         int offset = 1;
         int size = useLargeIcons ? 14 : 9;
@@ -88,7 +88,8 @@ public class FoodHUD implements ClientGuiEvent.RenderHud
         int bgColor = isDrink ? FastColor.ARGB32.color(96, 52, 104, 163) : FastColor.ARGB32.color(96, 0, 0, 0);
         int yellow = FastColor.ARGB32.color(255, 255, 191, 0);
 
-        int startWidth = width - (size * offset) - offset + 1;
+//        int startWidth = width - (size * offset) - offset + 1;
+        int startWidth = width + (size * offset) + offset - 1;
         float ticksLeftPercent = Float.min(1.0F, (float) food.ticksLeft / foodConfig.getTime());
         int barHeight = Integer.max(1, (int)((size + 2f) * ticksLeftPercent));
         int barColor = ticksLeftPercent < SOLValheim.Config.common.eatAgainPercentage ?

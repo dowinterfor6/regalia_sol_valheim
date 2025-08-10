@@ -39,26 +39,30 @@ public class LocalPlayerMixin
     @Inject(at = @At("HEAD"), method = "hasEnoughFoodToStartSprinting", cancellable = true)
     public void canStartSprinting(CallbackInfoReturnable<Boolean> cir)
     {
-        var solPlayer = (PlayerEntityMixinDataAccessor) this;
-        var mayFly = ((LocalPlayer) (Object) this).getAbilities().mayfly;
-
-        if (mayFly || ((LocalPlayer) (Object) this).tickCount < SOLValheim.Config.common.respawnGracePeriod * 20)
-        {
-            cir.setReturnValue(true);
-            cir.cancel();
-            return;
-        }
-
-        var foodData = solPlayer.sol_valheim$getFoodData();
-        if (foodData == null || foodData.ItemEntries.isEmpty())
-        {
-            cir.setReturnValue(false);
-            cir.cancel();
-            return;
-        }
-
-        cir.setReturnValue(true);
-        cir.cancel();
+    	cir.setReturnValue(true);
+    	cir.cancel();
+    	
+//    	
+//        var solPlayer = (PlayerEntityMixinDataAccessor) this;
+//        var mayFly = ((LocalPlayer) (Object) this).getAbilities().mayfly;
+//
+//        if (mayFly || ((LocalPlayer) (Object) this).tickCount < SOLValheim.Config.common.respawnGracePeriod * 20)
+//        {
+//            cir.setReturnValue(true);
+//            cir.cancel();
+//            return;
+//        }
+//
+//        var foodData = solPlayer.sol_valheim$getFoodData();
+//        if (foodData == null || foodData.ItemEntries.isEmpty())
+//        {
+//            cir.setReturnValue(false);
+//            cir.cancel();
+//            return;
+//        }
+//
+//        cir.setReturnValue(true);
+//        cir.cancel();
     }
     #endif
 

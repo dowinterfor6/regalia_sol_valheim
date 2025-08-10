@@ -41,9 +41,9 @@ public class ModConfig extends PartitioningSerializer.GlobalData {
 
             if (isDrink) {
                 if (registry.contains("potion")) {
-                    food = new FoodProperties.Builder().nutrition(4).saturationMod(0.75f).build();
-                }
-                else if (registry.contains("milk")) {
+//                    food = new FoodProperties.Builder().nutrition(4).saturationMod(0.75f).build();
+                	return null;
+                } else if (registry.contains("milk")) {
                     food = new FoodProperties.Builder().nutrition(6).saturationMod(1f).build();
                 }
                 else {
